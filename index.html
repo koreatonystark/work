@@ -18,7 +18,7 @@
 :root{
   --bg:#0e1014;--surf:#161920;--surf2:#1e222b;--line:#2a2f3a;
   --tx:#eef0f4;--tx2:#a3abb9;--tx3:#6a7280;
-  --acc:#f5a524;--ok:#3ecf8e;--bad:#ff5d5d;--warn:#f5c451;
+  --acc:#f5a524;--ok:#3ecf8e;--bad:#ff5d5d;--warn:#f5c451;--neon:#c8ff2e;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -51,7 +51,8 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 16px 6px}
 .tab{flex:0 0 auto;padding:7px 13px;border-radius:99px;background:var(--surf);color:var(--tx2);font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;border:1px solid transparent}
 .tab b{width:7px;height:7px;border-radius:50%;display:block}
 .tab.on{background:var(--surf2);color:var(--tx);border-color:var(--c)}
-.tab .chk{font-size:11px;color:var(--ok)}
+.tab .chk{font-size:11px;color:var(--tx3)}
+.tab .nd{width:7px;height:7px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px var(--neon);display:block}
 .seg{display:flex;justify-content:center;gap:4px;margin-top:8px}
 .seg button{font-size:12px;color:var(--tx3);padding:4px 10px;border-radius:99px;display:flex;align-items:center;gap:5px}
 .seg button.on{color:var(--tx);background:var(--surf)}
@@ -72,23 +73,38 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 16px 6px}
   font-size:clamp(17px,5.6vw,22px);font-weight:700;display:grid;place-items:center;transition:background .08s,color .08s,transform .08s}
 .key.fn{font-size:clamp(11px,3.4vw,13px);color:var(--tx2);font-weight:700;letter-spacing:.3px}
 .key:active{background:var(--acc);color:#111;transform:translate(-50%,-50%) scale(.94)}
-.dial.lock .key{opacity:.28;pointer-events:none}
+.dial.lock .key{opacity:.18;pointer-events:none}
+.dial.lock::before{opacity:.55}
+.info.done{color:var(--tx3)}
 .center{position:absolute;left:50%;top:50%;width:52%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
   background:var(--bg);border:2px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
   transition:border-color .15s,background .15s,box-shadow .2s}
 .center .sub{font-size:12px;color:var(--tx3);font-weight:600}
 .center .big{font-size:clamp(34px,11vw,46px);font-weight:800;letter-spacing:-1.5px;line-height:1}
 .center .big.dim{color:var(--tx3)}
+.center.need{border-color:var(--neon);background:color-mix(in srgb,var(--neon) 7%,var(--bg));animation:breathe 2.2s ease-in-out infinite}
+.center.need .big{color:var(--neon);text-shadow:0 0 18px color-mix(in srgb,var(--neon) 55%,transparent)}
+.center.need .sub{color:color-mix(in srgb,var(--neon) 80%,var(--tx2))}
+.center.need .sub.go{font-weight:800}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 4px color-mix(in srgb,var(--neon) 14%,transparent),0 0 22px color-mix(in srgb,var(--neon) 28%,transparent)}
+  50%{box-shadow:0 0 0 9px color-mix(in srgb,var(--neon) 8%,transparent),0 0 38px color-mix(in srgb,var(--neon) 45%,transparent)}}
+.dial.need::before{border-color:color-mix(in srgb,var(--neon) 35%,var(--line))}
+.dial.need .key{color:var(--neon)}
+.dial.need .key.fn{color:color-mix(in srgb,var(--neon) 70%,var(--tx2))}
+.dial .key:active{background:var(--neon)!important;color:#111!important}
+.info.need{color:var(--neon);font-weight:600}
 .center .big .u{font-size:.45em;font-weight:700;margin-left:2px;letter-spacing:0}
-.center .ent{margin-top:6px;font-size:13px;font-weight:800;letter-spacing:2px;padding:5px 14px;border-radius:99px;background:var(--acc);color:#111}
-.center.typing{border-color:var(--acc);box-shadow:0 0 0 6px color-mix(in srgb,var(--acc) 18%,transparent)}
+.center .ent{margin-top:6px;font-size:13px;font-weight:800;letter-spacing:2px;padding:5px 14px;border-radius:99px;background:var(--neon);color:#111;box-shadow:0 0 16px color-mix(in srgb,var(--neon) 60%,transparent)}
+.center.typing{border-color:var(--neon);background:color-mix(in srgb,var(--neon) 12%,var(--bg));box-shadow:0 0 0 6px color-mix(in srgb,var(--neon) 20%,transparent),0 0 40px color-mix(in srgb,var(--neon) 40%,transparent)}
+.center.typing .big{color:var(--neon)}
 .center.bad{border-color:var(--bad)}
 .center.bad .ent{background:var(--surf2);color:var(--bad);letter-spacing:0}
-.center.done{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 8%,var(--bg))}
-.center.done .chk{color:var(--ok);font-size:20px;font-weight:900;line-height:1}
-.center.done .sub{color:var(--ok)}
+.center.done{border-color:var(--line);background:var(--surf);box-shadow:none;cursor:default}
+.center.done .big{color:var(--tx3)}
+.center.done .chk{color:var(--tx3);font-size:20px;font-weight:900;line-height:1}
+.center.done .sub{color:var(--tx3)}
 .center.off{border-color:var(--tx3);background:var(--surf)}
-.center.off .chk,.center.off .sub{color:var(--tx2)}
+.center.off .chk,.center.off .sub{color:var(--tx3)}
 .center.pop{animation:pop .35s}
 @keyframes pop{40%{transform:translate(-50%,-50%) scale(1.07)}}
 .info{text-align:center;font-size:13px;color:var(--tx2);margin:10px 0 2px;min-height:18px}
@@ -98,7 +114,8 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 16px 6px}
 .btn{height:52px;border-radius:14px;font-weight:800;font-size:16px;display:grid;place-items:center}
 .btn.pri{flex:2;background:var(--acc);color:#111;letter-spacing:1.5px}
 .btn.sec{flex:1;background:var(--surf);border:1px solid var(--line);color:var(--tx)}
-.btn:disabled{opacity:.35}
+.btn:disabled{opacity:.25}
+.actions.need .btn.sec{border-color:color-mix(in srgb,var(--neon) 45%,var(--line));color:var(--neon)}
 .btn.pri:disabled{background:var(--surf2);color:var(--tx3);opacity:1}
 .btn:not(:disabled):active{transform:scale(.98)}
 
@@ -403,7 +420,7 @@ function renderTabs(w){
   const t = todayStr();
   $('#tabs').innerHTML = activeWorks().map(x => {
     const done = view.records.some(r => r.id === x.id + '_' + t && live(r));
-    return `<button class="tab ${x.id === w.id ? 'on' : ''}" style="--c:${x.color}" data-w="${x.id}"><b style="background:${x.color}"></b>${esc(x.name)}${done ? '<span class="chk">✓</span>' : ''}</button>`;
+    return `<button class="tab ${x.id === w.id ? 'on' : ''}" style="--c:${x.color}" data-w="${x.id}"><b style="background:${x.color}"></b>${esc(x.name)}${done ? '<span class="chk">✓</span>' : ((x.days || []).includes(dowU(t)) ? '<i class="nd"></i>' : '')}</button>`;
   }).join('');
 }
 function tickClock(){
@@ -439,7 +456,8 @@ function renderEntry(w){
     inner = `<div class="sub">근무시간</div><div class="big">${p.disp}<span class="u">h</span></div><div class="ent">${p.valid ? 'ENTER' : '확인 필요'}</div>`;
     info = '1~2자리=시간 · 3~4자리=시간+분 (예: 730 → 7:30)';
   } else {
-    inner = `<div class="sub">${workday ? '기본 근무' : '휴무일'}</div><div class="big dim">${fmtH(w.hours)}<span class="u">h</span></div><div class="sub">숫자를 누르세요</div>`;
+    cls = workday ? 'need' : '';
+    inner = `<div class="sub">${workday ? '오늘 근무시간' : '휴무일'}</div><div class="big ${workday ? '' : 'dim'}">${fmtH(w.hours)}<span class="u">h</span></div><div class="sub go">${workday ? '숫자를 눌러 입력' : '입력하면 기록돼요'}</div>`;
     info = workday ? `⏱ ${w.autoTime}에 ${fmtH(w.hours)}h 자동입력 예정` : '오늘은 근무일이 아닙니다 · 입력하면 기록돼요';
   }
   const keys = KEYS.map((k, i) => {
@@ -450,9 +468,9 @@ function renderEntry(w){
 
 
   $('#pEntry').innerHTML = `
-    <div class="dial ${rec ? 'lock' : ''}">${keys}<button class="center ${cls}" data-act="center">${inner}</button></div>
-    <div class="info">${info}</div>
-    <div class="actions">
+    <div class="dial ${rec ? 'lock' : (workday || p ? 'need' : '')}">${keys}<button class="center ${cls}" data-act="center">${inner}</button></div>
+    <div class="info ${rec ? 'done' : (workday || p ? 'need' : '')}">${info}</div>
+    <div class="actions ${rec ? '' : 'need'}">
       <button class="btn sec" data-act="off" ${rec ? 'disabled' : ''}>Day off</button>
     </div>
     ${calHTML(w, calYm)}`;
